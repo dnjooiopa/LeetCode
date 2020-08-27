@@ -1,35 +1,31 @@
-function isPalindrome(s) {
-    let isPalindrome = true
-    let subStringLength = s.length
-    for (let i = 0; i < subStringLength / 2; i++) {
-        if (s[i] != s[subStringLength - i - 1]) {
-            isPalindrome = false
-            break
-        }
+function expandAroundCenter(s, left, right) {
+    let i = left,
+        j = right
+    while (i >= 0 && j < s.length && (s[i] == s[j])) {
+        i--
+        j++
     }
-    return isPalindrome
+    return j - i - 1
 }
 
 function longestPalindrome(s) {
-    if(s == '')
+    if (!s || s.length == 0)
         return ''
-        
-    let max = 1
-    let longestPalindrome = s[0]
-    for (let i = 0; i < s.length - 1; i++) {
-        for (let j = i + 1; j < s.length; j++) {
-            const len = j - i + 1
-            const subString = s.substring(i, j + 1)
-             if ((len > max) && isPalindrome(subString)){
-                longestPalindrome = subString
-                max = len
-             }
-                 
+    let start = 0
+    let end = 0
+    for (let i = 0; i < s.length; i++) {
+        let len1 = expandAroundCenter(s, i, i)
+        let len2 = expandAroundCenter(s, i, i + 1)
+        let len = Math.max(len1, len2)
+        if (len > end - start) {
+            start = i - Math.floor((len - 1) / 2)
+            end = i + Math.floor(len / 2)
         }
+
     }
-    return longestPalindrome
+
+    return s.substring(start, end + 1)
 }
 
 
-//console.log(isPalindrome('abccbdd', 1, 4));
-console.log(longestPalindrome('babad'))
+console.log(longestPalindrome('aaaa'))
