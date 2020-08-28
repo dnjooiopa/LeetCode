@@ -4,17 +4,14 @@ function convert(s, numRows) {
 
     let zigzag = new Array(numRows).fill('')
     let row = 0
-    let direction = 1
+    let direction = -1
     for (let i = 0; i < s.length; i++) {
         zigzag[row] += s[i]
-        if (row == 0 && direction == -1) {
-            direction = 1
-        } else if (row == (numRows - 1) && direction == 1) {
-            direction = -1
-        }
+        if (row == 0 || row == numRows - 1)
+            direction = -direction
         row += direction
     }
-    
+
     return zigzag.join('')
 }
 
