@@ -5,17 +5,18 @@ function isNumber(c) {
 function myAtoi(s) {
     let number = 0;
     let flag = 1;
+    let foundNum = false
     for (let i = 0; i < s.length; i++) {
         let c = s[i]
 
-        if (!(c == '-' || c == '+') && !isNumber(c) && c != ' ')
+        if ((!(c == '-' || c == '+') && !isNumber(c) && (c != ' ' && !foundNum)) || ((c == '-') && (s[i + 1] == '+') || (c == '+') && (s[i + 1] == '-')))
             break
-
 
         if (c == '-' && isNumber(s[i + 1]))
             flag = -1
 
         if (isNumber(c)) {
+            foundNum = true
             number *= 10
             number += Number(c)
         }
